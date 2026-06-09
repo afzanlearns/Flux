@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { X, Download } from 'lucide-react'
 import { useInstallPrompt } from '../../hooks/useInstallPrompt'
+import useUIStore from '../../store/uiStore'
 
 export default function InstallBanner() {
   const { prompt, installApp, isInstalled } = useInstallPrompt()
+  const dismissAllCards = useUIStore((s) => s.dismissAllCards)
   const [dismissed, setDismissed] = useState(false)
 
-  if (!prompt || isInstalled || dismissed) return null
+  if (!prompt || isInstalled || dismissed || dismissAllCards) return null
 
   return (
     <div className="install-banner">

@@ -6,6 +6,9 @@ import useUIStore from '../../store/uiStore'
 export default function MilestoneCelebration({ milestones, onCelebrate }) {
   const [dismissed, setDismissed] = useState(new Set())
   const hideAmounts = useUIStore((s) => s.hideAmounts)
+  const dismissAllCards = useUIStore((s) => s.dismissAllCards)
+
+  if (dismissAllCards) return null
 
   const active = milestones.filter(m => !m.celebrated && !dismissed.has(m.id))
 

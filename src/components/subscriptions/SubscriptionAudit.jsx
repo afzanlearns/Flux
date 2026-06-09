@@ -2,10 +2,14 @@ import { useState } from 'react'
 import { X, Check, AlertTriangle } from 'lucide-react'
 import Card from '../common/Card'
 import Button from '../common/Button'
+import useUIStore from '../../store/uiStore'
 import { daysSince } from '../../utils/dateHelpers'
 
 export default function SubscriptionAudit({ subscriptions, totalMonthly, onCancel, onDismiss }) {
+  const dismissAllCards = useUIStore((s) => s.dismissAllCards)
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  if (dismissAllCards) return null
 
   const unused = subscriptions.filter(s => daysSince(s.lastUsed) > 60)
 

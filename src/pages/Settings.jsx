@@ -11,7 +11,7 @@ import { exportData } from '../utils/dataExport'
 import { importData } from '../utils/dataImport'
 
 export default function Settings({ onNavigate }) {
-  const { theme, setTheme, currency, setCurrency } = useUIStore()
+  const { theme, setTheme, currency, setCurrency, clearDismissals } = useUIStore()
   const transactions = useTransactionStore((s) => s.transactions)
   const accounts = useAccountStore((s) => s.accounts)
   const subscriptions = useSubscriptionStore((s) => s.subscriptions)
@@ -54,6 +54,7 @@ export default function Settings({ onNavigate }) {
     clearAccounts()
     clearSubscriptions()
     clearDebts()
+    clearDismissals()
     setShowClearConfirm(false)
   }
 

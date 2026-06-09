@@ -25,6 +25,8 @@ export default function Dashboard({ onNavigate }) {
   const milestones = useDebtStore((s) => s.milestones)
   const lastAuditMonth = useUIStore((s) => s.lastAuditMonth)
   const setLastAuditMonth = useUIStore((s) => s.setLastAuditMonth)
+  const dismissAll = useUIStore((s) => s.dismissAll)
+  const dismissAllCards = useUIStore((s) => s.dismissAllCards)
 
   const data = useDashboardData()
 
@@ -65,6 +67,15 @@ export default function Dashboard({ onNavigate }) {
           expenseChange={data.expenseChange}
           totalDebt={debtFormatted}
         />
+
+        {!dismissAllCards && (milestones.some(m => !m.celebrated) || showAudit) && (
+          <button
+            onClick={dismissAll}
+            className="w-full text-center text-xs text-text-tertiary hover:text-text-secondary transition-colors py-1"
+          >
+            Dismiss all
+          </button>
+        )}
 
         <MilestoneCelebration
           milestones={milestones}

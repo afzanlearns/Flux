@@ -9,6 +9,7 @@ const useUIStore = create(
       hideAmounts: false,
       onboardingComplete: false,
       lastAuditMonth: null,
+      dismissAllCards: false,
       currentPage: 'dashboard',
 
       setTheme: (theme) => set({ theme }),
@@ -17,6 +18,8 @@ const useUIStore = create(
       completeOnboarding: () => set({ onboardingComplete: true }),
       setCurrentPage: (page) => set({ currentPage: page }),
       setLastAuditMonth: (month) => set({ lastAuditMonth: month }),
+      dismissAll: () => set({ dismissAllCards: true }),
+      clearDismissals: () => set({ lastAuditMonth: null, dismissAllCards: false }),
     }),
     {
       name: 'flux-ui'

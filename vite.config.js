@@ -15,7 +15,7 @@ export default defineConfig({
         short_name: 'Flux',
         description: 'Simple personal finance tracking. Offline-first, no bank integration.',
         theme_color: '#BE185D',
-        background_color: '#FFFFFF',
+        background_color: '#BE185D',
         display: 'standalone',
         scope: '/',
         start_url: '/',
