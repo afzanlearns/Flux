@@ -1,16 +1,39 @@
-# React + Vite
+# Flux
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Your money, clearly.** A personal finance tracker that works offline — no bank integration, no accounts to link, just you and your numbers.
 
-Currently, two official plugins are available:
+### Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dashboard** — net worth at a glance with income, expenses, and balance breakdown
+- **Transactions** — log and categorize every inflow and outflow
+- **Subscriptions** — track recurring payments and get alerted to duplicates
+- **Debts** — monitor loans and celebrate milestones
+- **Insights** — spending charts, patterns, and monthly snapshots
+- **Offline-first** — everything stored locally in IndexedDB. Works without internet.
+- **PWA** — install on your phone or desktop for a native-like experience
 
-## React Compiler
+### Tech
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React, Vite, Tailwind CSS v4, Recharts, Lucide icons, IndexedDB (idb), Workbox (PWA).
 
-## Expanding the ESLint configuration
+### Run locally
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+npx vite preview
+```
+
+### Install as PWA
+
+Build the app, open the preview URL in Chrome/Edge on your phone, tap the install banner or use the browser menu → Add to Home Screen.
+
+### License
+
+MIT
