@@ -84,7 +84,7 @@ export default function DebtList({ debts, onDelete, onEdit, onAddPayment }) {
                     {debt.payments.slice(-5).reverse().map((p, i) => (
                       <div key={p.id || i} className="flex items-center justify-between text-xs py-1">
                         <span className="text-text-tertiary">{new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                        <span className="font-mono font-medium text-success">-₹{p.amount.toLocaleString('en-IN')}</span>
+                        <span className="font-mono font-medium text-success">{hideAmounts ? '—' : `-₹${p.amount.toLocaleString('en-IN')}`}</span>
                       </div>
                     ))}
                   </div>
@@ -134,3 +134,4 @@ function PaymentForm({ onSubmit }) {
     </form>
   )
 }
+

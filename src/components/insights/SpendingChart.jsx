@@ -1,10 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 import Card from '../common/Card'
+import useUIStore from '../../store/uiStore'
 import { formatAmount } from '../../utils/currencyFormatter'
 
 const COLORS = ['#BE185D', '#DB2777', '#10B981', '#F59E0B', '#EF4444', '#831843']
 
 export default function SpendingChart({ categories }) {
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
+
   if (!categories || categories.length === 0) {
     return (
       <Card>
@@ -19,7 +22,7 @@ export default function SpendingChart({ categories }) {
     name: c.category,
     value: c.amount,
     percentage: c.percentage,
-    formatted: formatAmount(c.amount)
+    formatted: hideAmounts ? '—' : formatAmount(c.amount)
   }))
 
   return (

@@ -7,20 +7,24 @@ import Modal from '../components/common/Modal'
 import SubscriptionList from '../components/subscriptions/SubscriptionList'
 import SubscriptionForm from '../components/subscriptions/SubscriptionForm'
 import useSubscriptionStore from '../store/subscriptionStore'
+import useUIStore from '../store/uiStore'
 import { useSubscriptionData } from '../hooks/useCalculations'
 import { formatAmount } from '../utils/currencyFormatter'
 
 export default function Subscriptions({ onNavigate }) {
   const { addSubscription, updateSubscription, deleteSubscription, cancelSubscription, markUsed } = useSubscriptionStore()
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
   const { active, cancelled, monthlyTotal, cancelledSavings } = useSubscriptionData()
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState(null)
   const [showCancelled, setShowCancelled] = useState(false)
   const [confirmCancelId, setConfirmCancelId] = useState(null)
 
-  const monthlyFormatted = formatAmount(monthlyTotal)
+  const mask = (val) => hideAmounts ? '—' : formatAmount(val)
+
+  const monthlyFormatted = mask(monthlyTotal)
   const annualTotal = monthlyTotal * 12
-  const annualFormatted = formatAmount(annualTotal)
+  const annualFormatted = mask(annualTotal)
 
   const handleSave = (data) => {
     if (editing) {
@@ -87,7 +91,7 @@ export default function Subscriptions({ onNavigate }) {
             >
               <div>
                 <span className="text-sm font-medium text-text-primary">Cancelled</span>
-                <span className="text-xs text-text-tertiary ml-2">Saved {formatAmount(cancelledSavings)}/year</span>
+                <span className="text-xs text-text-tertiary ml-2">Saved {mask(cancelledSavings)}/year</span>
               </div>
               <ChevronDown size={16} className={`text-text-tertiary transition-transform ${showCancelled ? 'rotate-180' : ''}`} />
             </button>

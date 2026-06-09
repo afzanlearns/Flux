@@ -5,11 +5,13 @@ import TransactionList from '../components/transactions/TransactionList'
 import TransactionForm from '../components/transactions/TransactionForm'
 import Modal from '../components/common/Modal'
 import useTransactionStore from '../store/transactionStore'
+import useUIStore from '../store/uiStore'
 import { calcMonthlyIncome, calcMonthlyExpenses, calcNetMonthly } from '../utils/calculations'
 import { formatAmount } from '../utils/currencyFormatter'
 
 export default function Transactions({ onNavigate }) {
   const { transactions, addTransaction, updateTransaction, deleteTransaction } = useTransactionStore()
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
   const [filter, setFilter] = useState('all')
   const [showForm, setShowForm] = useState(false)
   const [formType, setFormType] = useState('expense')
@@ -18,6 +20,8 @@ export default function Transactions({ onNavigate }) {
   const monthlyIncome = useMemo(() => calcMonthlyIncome(transactions), [transactions])
   const monthlyExpenses = useMemo(() => calcMonthlyExpenses(transactions), [transactions])
   const monthlyNet = useMemo(() => calcNetMonthly(transactions), [transactions])
+
+  const mask = (val) => hideAmounts ? '—' : formatAmount(val)
 
   const openAdd = (type) => {
     setFormType(type)
@@ -50,17 +54,17 @@ export default function Transactions({ onNavigate }) {
           <div className="flex items-center justify-around text-center">
             <div>
               <div className="text-xs text-text-secondary mb-1 font-medium">Income</div>
-              <div className="font-mono text-base font-semibold text-success">{formatAmount(monthlyIncome)}</div>
+              <div className="font-mono text-base font-semibold text-success">{mask(monthlyIncome)}</div>
             </div>
             <div className="w-px h-10 bg-border" />
             <div>
               <div className="text-xs text-text-secondary mb-1 font-medium">Expenses</div>
-              <div className="font-mono text-base font-semibold text-warning">{formatAmount(monthlyExpenses)}</div>
+              <div className="font-mono text-base font-semibold text-warning">{mask(monthlyExpenses)}</div>
             </div>
             <div className="w-px h-10 bg-border" />
             <div>
               <div className="text-xs text-text-secondary mb-1 font-medium">Net</div>
-              <div className={`font-mono text-base font-semibold ${monthlyNet >= 0 ? 'text-success' : 'text-danger'}`}>{formatAmount(monthlyNet)}</div>
+              <div className={`font-mono text-base font-semibold ${monthlyNet >= 0 ? 'text-success' : 'text-danger'}`}>{mask(monthlyNet)}</div>
             </div>
           </div>
         </div>

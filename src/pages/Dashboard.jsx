@@ -29,6 +29,7 @@ export default function Dashboard({ onNavigate }) {
   const data = useDashboardData()
 
   const balanceFormatted = {
+    net: data.balance.net,
     netFormatted: formatAmount(data.balance.net),
     cashFormatted: formatAmount(data.balance.cash),
     onlineFormatted: formatAmount(data.balance.online),

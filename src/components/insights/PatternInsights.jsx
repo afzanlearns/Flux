@@ -1,5 +1,6 @@
 import { Lightbulb, BarChart3, TrendingUp, RefreshCw } from 'lucide-react'
 import Card from '../common/Card'
+import useUIStore from '../../store/uiStore'
 
 const insightIcons = {
   chart: BarChart3,
@@ -8,6 +9,8 @@ const insightIcons = {
 }
 
 export default function PatternInsights({ patterns }) {
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
+
   if (!patterns) return null
 
   const insights = []
@@ -18,7 +21,7 @@ export default function PatternInsights({ patterns }) {
       color: 'text-accent',
       bg: 'icon-wrap-accent',
       text: `Most of your spending happens on ${patterns.peakDay}s`,
-      detail: `Peak day spending was ₹${patterns.peakAmount.toLocaleString('en-IN')}`
+      detail: `Peak day spending was ${hideAmounts ? '—' : `₹${patterns.peakAmount.toLocaleString('en-IN')}`}`
     })
   }
 

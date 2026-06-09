@@ -137,7 +137,7 @@ export default function Onboarding() {
               prefix="₹"
             />
             <button
-              onClick={() => setSkipDebt(true)}
+              onClick={() => { setSkipDebt(true); completeOnboarding() }}
               className="w-full text-sm text-text-tertiary hover:text-accent transition-colors cursor-pointer py-2"
             >
               Skip, I have no debts

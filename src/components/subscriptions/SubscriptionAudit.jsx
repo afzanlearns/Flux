@@ -50,7 +50,7 @@ export default function SubscriptionAudit({ subscriptions, totalMonthly, onCance
       </div>
 
       <p className="text-sm text-text-secondary mb-4">
-        You're paying <span className="font-semibold text-text-primary">₹{totalMonthly.toLocaleString('en-IN')}/month</span>.
+        You're paying <span className="font-semibold text-text-primary">{hideAmounts ? '—' : `₹${totalMonthly.toLocaleString('en-IN')}`}/month</span>.
         {unused.length} haven't been used in 60+ days.
       </p>
 

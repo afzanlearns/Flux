@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { Trash2, Edit3, Coffee, Car, Repeat, Briefcase, Package, Wallet, PenTool, ArrowRightLeft } from 'lucide-react'
+import useUIStore from '../../store/uiStore'
 
 const categoryIcons = {
   Food: Coffee,

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Sparkles, X } from 'lucide-react'
 import Card from '../common/Card'
+import useUIStore from '../../store/uiStore'
 
 export default function MilestoneCelebration({ milestones, onCelebrate }) {
   const [dismissed, setDismissed] = useState(new Set())
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
 
   const active = milestones.filter(m => !m.celebrated && !dismissed.has(m.id))
 
@@ -23,7 +25,7 @@ export default function MilestoneCelebration({ milestones, onCelebrate }) {
                   <h4 className="text-sm font-semibold text-success">Milestone reached!</h4>
                   <p className="text-sm mt-0.5 text-text-primary">
                     {milestone.type === 'debt_paid'
-                      ? `You paid off ₹${milestone.amount?.toLocaleString('en-IN') || 'a debt'}!`
+                      ? `You paid off ${hideAmounts ? '—' : `₹${milestone.amount?.toLocaleString('en-IN') || 'a debt'}`}!`
                       : 'Great progress!'}
                   </p>
                   {milestone.note && (

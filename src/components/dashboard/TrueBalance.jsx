@@ -1,8 +1,10 @@
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Eye, EyeOff, Wallet } from 'lucide-react'
+import useUIStore from '../../store/uiStore'
 
 export default function TrueBalance({ balance }) {
-  const [hidden, setHidden] = useState(false)
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
+  const toggleHideAmounts = useUIStore((s) => s.toggleHideAmounts)
   const [animate, setAnimate] = useState(false)
   const prevNet = useRef(balance.net)
 
@@ -15,7 +17,7 @@ export default function TrueBalance({ balance }) {
     }
   }, [balance.net])
 
-  const mask = (num) => hidden ? '—' : num
+  const mask = (num) => hideAmounts ? '—' : num
 
   return (
     <div className="number-hero animate-fadeIn">
@@ -27,10 +29,10 @@ export default function TrueBalance({ balance }) {
           </span>
         </div>
         <button
-          onClick={() => setHidden(!hidden)}
+          onClick={toggleHideAmounts}
           className="btn-icon"
         >
-          {hidden ? <EyeOff size={16} /> : <Eye size={16} />}
+          {hideAmounts ? <EyeOff size={16} /> : <Eye size={16} />}
         </button>
       </div>
 
@@ -44,19 +46,19 @@ export default function TrueBalance({ balance }) {
 
       <div className="number-hero-breakdown">
         <div className="number-hero-breakdown-item">
-          <div className={`number-hero-breakdown-value ${hidden ? 'text-text-tertiary' : ''}`}>
+          <div className={`number-hero-breakdown-value ${hideAmounts ? 'text-text-tertiary' : ''}`}>
             {mask(balance.cashFormatted)}
           </div>
           <div className="number-hero-breakdown-label">Cash</div>
         </div>
         <div className="number-hero-breakdown-item">
-          <div className={`number-hero-breakdown-value ${hidden ? 'text-text-tertiary' : ''}`}>
+          <div className={`number-hero-breakdown-value ${hideAmounts ? 'text-text-tertiary' : ''}`}>
             {mask(balance.onlineFormatted)}
           </div>
           <div className="number-hero-breakdown-label">Online</div>
         </div>
         <div className="number-hero-breakdown-item">
-          <div className={`number-hero-breakdown-value ${hidden ? 'text-text-tertiary' : 'text-danger'}`}>
+          <div className={`number-hero-breakdown-value ${hideAmounts ? 'text-text-tertiary' : 'text-danger'}`}>
             {mask(balance.owedFormatted)}
           </div>
           <div className="number-hero-breakdown-label">Owed</div>

@@ -9,17 +9,21 @@ import DebtList from '../components/debts/DebtList'
 import DebtProgress from '../components/debts/DebtProgress'
 import MilestoneCelebration from '../components/debts/MilestoneCelebration'
 import useDebtStore from '../store/debtStore'
+import useUIStore from '../store/uiStore'
 import { useDebtData } from '../hooks/useCalculations'
 import { formatAmount } from '../utils/currencyFormatter'
 
 export default function Debts({ onNavigate }) {
   const { addDebt, updateDebt, deleteDebt, addPayment, celebrateMilestone } = useDebtStore()
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
   const { active, paid, totalDebt, totalPaid, milestones } = useDebtData()
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState(null)
 
-  const totalDebtFormatted = formatAmount(totalDebt)
-  const totalPaidFormatted = formatAmount(totalPaid)
+  const mask = (val) => hideAmounts ? '—' : formatAmount(val)
+
+  const totalDebtFormatted = mask(totalDebt)
+  const totalPaidFormatted = mask(totalPaid)
 
   const handleSave = (data) => {
     if (editing) {

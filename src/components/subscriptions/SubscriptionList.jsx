@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Trash2, Edit3, CheckCircle, XCircle, Calendar } from 'lucide-react'
+import useUIStore from '../../store/uiStore'
 import { daysSince } from '../../utils/dateHelpers'
 
 export default function SubscriptionList({ subscriptions, onDelete, onEdit, onCancel, onMarkUsed }) {
   const [sortBy, setSortBy] = useState('cost')
+  const hideAmounts = useUIStore((s) => s.hideAmounts)
 
   const sorted = [...subscriptions].sort((a, b) => {
     if (sortBy === 'cost') return b.cost - a.cost
@@ -66,7 +68,7 @@ export default function SubscriptionList({ subscriptions, onDelete, onEdit, onCa
                 )}
               </div>
               <div className="flex items-center gap-2 text-xs text-text-tertiary">
-                <span>₹{sub.cost.toLocaleString('en-IN')}/{sub.frequency === 'yearly' ? 'yr' : 'mo'}</span>
+                <span>{hideAmounts ? '—' : `₹${sub.cost.toLocaleString('en-IN')}`}/{sub.frequency === 'yearly' ? 'yr' : 'mo'}</span>
                 <span>·</span>
                 <span className={isUnused && sub.status === 'active' ? 'text-warning font-medium' : ''}>
                   {daysSinceUsed === 0 ? 'Used today' : `${daysSinceUsed}d ago`}
