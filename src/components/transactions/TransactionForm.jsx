@@ -1,17 +1,21 @@
 import { useState } from 'react'
-import { Camera, X } from 'lucide-react'
+import { Camera, X, Wallet, Building2 } from 'lucide-react'
 import Button from '../common/Button'
 import Input from '../common/Input'
+import useAccountStore from '../../store/accountStore'
 
 const incomeCategories = ['Salary', 'Freelance', 'Other']
 const expenseCategories = ['Food', 'Transport', 'Subscriptions', 'Work', 'Other']
 
 export default function TransactionForm({ type, onSubmit, onClose, initialData }) {
+  const accounts = useAccountStore((s) => s.accounts)
+  const defaultAccountId = accounts[0]?.id || null
   const [amount, setAmount] = useState(initialData?.amount?.toString() || '')
   const [category, setCategory] = useState(initialData?.category || (type === 'income' ? 'Freelance' : 'Food'))
   const [date, setDate] = useState(initialData?.date || new Date().toISOString().split('T')[0])
   const [note, setNote] = useState(initialData?.note || '')
   const [photo, setPhoto] = useState(initialData?.photoURL || null)
+  const [accountId, setAccountId] = useState(initialData?.accountId || defaultAccountId)
   const [error, setError] = useState('')
 
   const categories = type === 'income' ? incomeCategories : expenseCategories
@@ -44,6 +48,7 @@ export default function TransactionForm({ type, onSubmit, onClose, initialData }
       amount: numAmount,
       category,
       date,
+      accountId,
       note: note.trim() || undefined,
       photoURL: photo || undefined
     })
@@ -73,6 +78,23 @@ export default function TransactionForm({ type, onSubmit, onClose, initialData }
               className={`filter-pill ${category === cat ? 'active' : ''}`}
             >
               {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label className="input-label">Account</label>
+        <div className="flex flex-wrap gap-2">
+          {accounts.map((acct) => (
+            <button
+              key={acct.id}
+              type="button"
+              onClick={() => setAccountId(acct.id)}
+              className={`filter-pill flex items-center gap-1.5 ${accountId === acct.id ? 'active' : ''}`}
+            >
+              {acct.type === 'wallet' ? <Wallet size={14} /> : <Building2 size={14} />}
+              {acct.name}
             </button>
           ))}
         </div>

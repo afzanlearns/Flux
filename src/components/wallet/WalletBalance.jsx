@@ -19,7 +19,7 @@ export default function WalletBalance() {
   if (!wallet || !online) return null
 
   const handleCashSave = () => {
-    const num = parseInt(cashAmount) || 0
+    const num = parseFloat(cashAmount) || 0
     setBalance(wallet.id, num)
     setCashEditing(false)
     setCashSaved(true)
@@ -27,7 +27,7 @@ export default function WalletBalance() {
   }
 
   const handleOnlineSave = () => {
-    const num = parseInt(onlineAmount) || 0
+    const num = parseFloat(onlineAmount) || 0
     setBalance(online.id, num)
     setOnlineEditing(false)
     setOnlineSaved(true)
